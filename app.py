@@ -45,6 +45,16 @@ def health():
     return jsonify({'status': 'ok'})
 
 
+@app.route('/api/verify', methods=['POST'])
+def verify():
+    """員工端身份驗證"""
+    data = request.get_json()
+    answer = (data or {}).get('answer', '').strip()
+    if answer == os.environ.get('ADMIN_CODE', '80325199'):
+        return jsonify({'ok': True})
+    return jsonify({'ok': False}), 403
+
+
 # ─── API 路由 ───
 
 @app.route('/api/registrations', methods=['GET'])

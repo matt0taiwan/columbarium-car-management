@@ -3,6 +3,23 @@
 {% block role %}員工端{% endblock %}
 
 {% block content %}
+<!-- 驗證畫面 -->
+<div class="card" id="verify-gate" style="max-width:400px;margin:3rem auto;text-align:center">
+    <div class="card-title">身份驗證</div>
+    <p style="margin-bottom:1rem;color:var(--text-light)">請回答以下問題以進入系統</p>
+    <form onsubmit="verifyAccess(event)">
+        <div class="form-group">
+            <label style="font-size:1.1rem;font-weight:600;color:var(--text)">幸福統編？</label>
+            <input type="text" id="verify-answer" placeholder="請輸入答案" required
+                   style="text-align:center;font-size:1.1rem;margin-top:0.5rem" autocomplete="off">
+        </div>
+        <div id="verify-error" style="color:var(--danger);font-size:0.85rem;margin-top:0.5rem;display:none">答案錯誤，請重試</div>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:1rem">進入系統</button>
+    </form>
+</div>
+
+<!-- 主內容（預設隱藏） -->
+<div id="admin-content" style="display:none">
 <!-- 新增登記 -->
 <div class="card" id="register-card">
     <div class="card-title">新增車輛登記</div>
@@ -163,14 +180,49 @@
         </form>
     </div>
 </div>
+
+</div><!-- end admin-content -->
 {% endblock %}
 
 {% block scripts %}
 <script>
     const PAGE = 'admin';
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('reg_date').value = today;
-    document.getElementById('query-date').value = today;
-    loadRegistrations();
+    const VERIFY_KEY = 'admin_verified';
+
+    async function verifyAccess(e) {
+        e.preventDefault();
+        const answer = document.getElementById('verify-answer').value.trim();
+        try {
+            const res = await fetch('/api/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answer })
+            });
+            if (res.ok) {
+                sessionStorage.setItem(VERIFY_KEY, '1');
+                showAdminContent();
+            } else {
+                document.getElementById('verify-error').style.display = '';
+                document.getElementById('verify-answer').value = '';
+                document.getElementById('verify-answer').focus();
+            }
+        } catch {
+            document.getElementById('verify-error').style.display = '';
+        }
+    }
+
+    function showAdminContent() {
+        document.getElementById('verify-gate').style.display = 'none';
+        document.getElementById('admin-content').style.display = '';
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('reg_date').value = today;
+        document.getElementById('query-date').value = today;
+        loadRegistrations();
+    }
+
+    // 已驗證過的 session 直接進入
+    if (sessionStorage.getItem(VERIFY_KEY) === '1') {
+        showAdminContent();
+    }
 </script>
 {% endblock %}
