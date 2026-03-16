@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}員工端 - 車輛管理系統{% endblock %}
+{% block role %}員工端{% endblock %}
+
+{% block content %}
+<!-- 新增登記 -->
+<div class="card" id="register-card">
+    <div class="card-title">新增車輛登記</div>
+    <form id="register-form" onsubmit="submitRegistration(event)">
+        <div class="form-grid" id="form-fields">
+            <div class="form-group">
+                <label>預計到訪日期 *</label>
+                <input type="date" id="reg_date" required>
+            </div>
+            <div class="form-group">
+                <label>車牌號碼 *</label>
+                <div id="plate-fields">
+                    <div class="plate-row">
+                        <input type="text" class="plate-input" placeholder="ABC-1234" required
+                               style="text-transform:uppercase">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline btn-sm" onclick="addPlateField()" style="margin-top:0.4rem">+ 新增車牌</button>
+            </div>
+            <div class="form-group">
+                <label>申請人姓名 *</label>
+                <input type="text" id="applicant_name" placeholder="申請人姓名" required>
+            </div>
+            <div class="form-group">
+                <label>亡者姓名</label>
+                <input type="text" id="deceased_name" placeholder="選填">
+            </div>
+            <div class="form-group">
+                <label>佛事項目</label>
+                <input type="text" id="service_type" placeholder="選擇或輸入佛事項目..." list="service-list">
+                <datalist id="service-list">
+                    <option value="入塔安正">
+                    <option value="暫厝">
+                    <option value="安正">
+                    <option value="安香">
+                    <option value="合爐">
+                    <option value="做七">
+                    <option value="百日">
+                    <option value="對年">
+                    <option value="遷出">
+                    <option value="看塔">
+                    <option value="其他">
+                </datalist>
+            </div>
+            <div class="form-group">
+                <label>預計到達時間</label>
+                <input type="time" id="visit_time">
+            </div>
+            <div class="form-group">
+                <label>資訊來源</label>
+                <input type="text" id="source" placeholder="LINE名字 / 仲介人名 / 電話">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="reset" class="btn btn-outline" onclick="resetForm()">清除</button>
+            <button type="submit" class="btn btn-primary">新增登記</button>
+        </div>
+    </form>
+</div>
+
+<!-- 日期導覽列 + 登記列表 -->
+<div class="card">
+    <div class="date-nav">
+        <button type="button" class="date-nav-btn" onclick="changeDate(-1)" title="前一天">&larr;</button>
+        <div class="date-nav-center">
+            <span id="list-title" class="date-nav-label">今日登記列表</span>
+            <input type="date" id="query-date" onchange="loadRegistrations()">
+        </div>
+        <button type="button" class="date-nav-btn" onclick="changeDate(1)" title="後一天">&rarr;</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="goToday()" id="btn-today" style="display:none">回到今天</button>
+    </div>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>車牌</th>
+                    <th>申請人</th>
+                    <th>亡者</th>
+                    <th>佛事</th>
+                    <th>時間</th>
+                    <th>來源</th>
+                    <th>狀態</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="reg-list">
+            </tbody>
+        </table>
+    </div>
+    <div id="empty-state" class="empty-state" style="display:none">
+        <div class="empty-state-icon">📋</div>
+        <p>目前沒有登記資料</p>
+    </div>
+</div>
+
+<!-- 統計儀表板 -->
+<div class="stats-grid" id="admin-stats-grid">
+    <div class="stat-card total">
+        <div class="stat-number" id="admin-stat-total">0</div>
+        <div class="stat-label" id="admin-stat-total-label">今日登記</div>
+    </div>
+    <div class="stat-card arrived">
+        <div class="stat-number" id="admin-stat-arrived">0</div>
+        <div class="stat-label">已到達</div>
+    </div>
+    <div class="stat-card pending">
+        <div class="stat-number" id="admin-stat-pending">0</div>
+        <div class="stat-label">未到達</div>
+    </div>
+</div>
+
+<!-- 佛事分佈 -->
+<div class="card" id="admin-service-stats-card" style="display:none">
+    <div class="card-title">佛事項目分佈</div>
+    <ul class="service-list" id="admin-service-stats"></ul>
+</div>
+
+<!-- 編輯 Modal -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+        <div class="modal-title">編輯登記資料</div>
+        <form onsubmit="saveEdit(event)">
+            <input type="hidden" id="edit-id">
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group">
+                    <label>預計到訪日期</label>
+                    <input type="date" id="edit-date" required>
+                </div>
+                <div class="form-group">
+                    <label>車牌號碼</label>
+                    <input type="text" id="edit-plate" required style="text-transform:uppercase">
+                </div>
+                <div class="form-group">
+                    <label>申請人姓名</label>
+                    <input type="text" id="edit-name" required>
+                </div>
+                <div class="form-group">
+                    <label>亡者姓名</label>
+                    <input type="text" id="edit-deceased" placeholder="選填">
+                </div>
+                <div class="form-group">
+                    <label>佛事項目</label>
+                    <input type="text" id="edit-service">
+                </div>
+                <div class="form-group">
+                    <label>預計到達時間</label>
+                    <input type="time" id="edit-time">
+                </div>
+                <div class="form-group">
+                    <label>資訊來源</label>
+                    <input type="text" id="edit-source">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-outline" onclick="closeEditModal()">取消</button>
+                <button type="submit" class="btn btn-primary">儲存</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const PAGE = 'admin';
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('reg_date').value = today;
+    document.getElementById('query-date').value = today;
+    loadRegistrations();
+</script>
+{% endblock %}

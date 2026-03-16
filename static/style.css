@@ -1,0 +1,720 @@
+/* ─── 莫蘭迪暖色系 ─── */
+:root {
+    --primary: #D4A574;
+    --primary-light: #E8CDB5;
+    --primary-hover: #C4956A;
+    --accent: #E8A87C;
+    --accent-hover: #D9956A;
+    --bg: #FAF5F0;
+    --card-bg: #FFFFFF;
+    --text: #5D4E37;
+    --text-light: #8B7D6B;
+    --border: #E8DDD3;
+    --success: #A8C5A0;
+    --success-dark: #8BB582;
+    --warning: #E8C07C;
+    --danger: #D4908A;
+    --danger-hover: #C47E78;
+    --shadow: rgba(93, 78, 55, 0.08);
+    --shadow-md: rgba(93, 78, 55, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ─── 頂部導覽 ─── */
+.navbar {
+    background: var(--card-bg);
+    border-bottom: 2px solid var(--primary-light);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-hover);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-role {
+    font-size: 0.8rem;
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.navbar-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.navbar-nav a:hover,
+.navbar-nav a.active {
+    background: var(--primary-light);
+    color: var(--primary-hover);
+}
+
+/* ─── 主要內容 ─── */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* ─── 卡片 ─── */
+.card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 12px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-hover);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+/* ─── 表單 ─── */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.6rem 0.8rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--card-bg);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+}
+
+.form-group input::placeholder {
+    color: var(--border);
+}
+
+/* ─── 按鈕 ─── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 4px 12px rgba(232, 168, 124, 0.3);
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: var(--success-dark);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: var(--danger-hover);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-light);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary-hover);
+    background: rgba(212, 165, 116, 0.05);
+}
+
+.btn-sm {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 8px;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: flex-end;
+}
+
+/* ─── 表格 ─── */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    padding: 0.7rem 0.8rem;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+thead th:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+thead th:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+tbody td {
+    padding: 0.7rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+tbody tr:hover {
+    background: rgba(212, 165, 116, 0.05);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ─── 狀態標籤 ─── */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-arrived {
+    background: rgba(168, 197, 160, 0.2);
+    color: var(--success-dark);
+}
+
+.badge-pending {
+    background: rgba(232, 192, 124, 0.2);
+    color: #B8960A;
+}
+
+/* ─── 搜尋框（交管端） ─── */
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    font-size: 1.3rem;
+    border: 2px solid var(--primary-light);
+    border-radius: 16px;
+    text-align: center;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.2);
+}
+
+.search-result {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.search-result.found {
+    background: rgba(168, 197, 160, 0.15);
+    border: 2px solid var(--success);
+    color: var(--success-dark);
+}
+
+.search-result.not-found {
+    background: rgba(212, 144, 138, 0.1);
+    border: 2px solid var(--danger);
+    color: var(--danger-hover);
+}
+
+.search-result-details {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    text-align: left;
+}
+
+.search-result-details p {
+    padding: 0.3rem 0;
+}
+
+/* ─── 統計卡片 ─── */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 1.2rem;
+    text-align: center;
+    box-shadow: 0 2px 8px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 0.2rem;
+}
+
+.stat-card.total .stat-number {
+    color: var(--primary-hover);
+}
+
+.stat-card.arrived .stat-number {
+    color: var(--success-dark);
+}
+
+.stat-card.pending .stat-number {
+    color: var(--warning);
+}
+
+/* ─── 佛事分佈 ─── */
+.service-list {
+    list-style: none;
+}
+
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.service-item:last-child {
+    border-bottom: none;
+}
+
+.service-bar {
+    height: 6px;
+    background: var(--primary-light);
+    border-radius: 3px;
+    flex: 1;
+    margin: 0 1rem;
+    overflow: hidden;
+}
+
+.service-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+
+/* ─── 日期導覽列 ─── */
+.date-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    background: var(--primary-light);
+    border-radius: 12px;
+}
+
+.date-nav-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.date-nav-label {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--primary-hover);
+}
+
+.date-nav input[type="date"] {
+    padding: 0.4rem 0.7rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--card-bg);
+    cursor: pointer;
+}
+
+.date-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--primary);
+    background: var(--card-bg);
+    color: var(--primary-hover);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.date-nav-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* ─── 快速登記切換 ─── */
+.toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: var(--border);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background: var(--accent);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* ─── 提示訊息 ─── */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--text);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 20px var(--shadow-md);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ─── 空狀態 ─── */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ─── 多車牌輸入 ─── */
+.plate-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+.plate-row input {
+    flex: 1;
+}
+
+.plate-remove {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    line-height: 1;
+}
+
+.plate-remove:hover {
+    background: rgba(212, 144, 138, 0.15);
+}
+
+/* ─── 新登記提醒 ─── */
+.new-reg-banner {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: var(--accent);
+    color: white;
+    text-align: center;
+    padding: 0.7rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 20px var(--shadow-md);
+    transition: transform 0.3s;
+    z-index: 150;
+}
+
+.new-reg-banner.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.new-row-highlight {
+    background: rgba(232, 168, 124, 0.25) !important;
+}
+
+/* ─── 編輯模式 ─── */
+.edit-input {
+    padding: 0.3rem 0.5rem;
+    border: 1.5px solid var(--primary);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    width: 100%;
+    min-width: 60px;
+}
+
+/* ─── Modal ─── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 30px var(--shadow-md);
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-hover);
+    margin-bottom: 1.5rem;
+}
+
+/* ─── RWD ─── */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .navbar {
+        padding: 0.6rem 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.05rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    .stat-card {
+        padding: 0.8rem 0.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th,
+    tbody td {
+        padding: 0.5rem 0.4rem;
+    }
+
+    .btn-sm {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .card {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+
+    .search-box input {
+        font-size: 1.1rem;
+        padding: 0.8rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .navbar-nav a {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.5rem;
+    }
+}

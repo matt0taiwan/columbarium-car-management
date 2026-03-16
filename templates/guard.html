@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}交管端 - 車輛管理系統{% endblock %}
+{% block role %}交管端{% endblock %}
+
+{% block content %}
+<!-- 車牌查詢 -->
+<div class="card">
+    <div class="card-title">車牌快速查詢</div>
+    <div class="search-box">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" id="search-plate"
+               placeholder="輸入車牌數字即可查詢"
+               oninput="searchPlate(this.value)" autocomplete="off">
+    </div>
+    <div id="search-result"></div>
+</div>
+
+<!-- 統計儀表板 -->
+<div class="stats-grid" id="stats-grid">
+    <div class="stat-card total">
+        <div class="stat-number" id="stat-total">0</div>
+        <div class="stat-label">今日登記</div>
+    </div>
+    <div class="stat-card arrived">
+        <div class="stat-number" id="stat-arrived">0</div>
+        <div class="stat-label">已到達</div>
+    </div>
+    <div class="stat-card pending">
+        <div class="stat-number" id="stat-pending">0</div>
+        <div class="stat-label">未到達</div>
+    </div>
+</div>
+
+<!-- 今日車輛總覽 -->
+<div class="card">
+    <div class="card-title">今日車輛總覽</div>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>車牌</th>
+                    <th>申請人</th>
+                    <th>亡者</th>
+                    <th>佛事</th>
+                    <th>時間</th>
+                    <th>狀態</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="guard-list">
+            </tbody>
+        </table>
+    </div>
+    <div id="guard-empty" class="empty-state" style="display:none">
+        <div class="empty-state-icon">🚗</div>
+        <p>今日尚無車輛登記</p>
+    </div>
+</div>
+
+<!-- 佛事分佈 -->
+<div class="card" id="service-stats-card" style="display:none">
+    <div class="card-title">佛事項目分佈</div>
+    <ul class="service-list" id="service-stats"></ul>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const PAGE = 'guard';
+    loadGuardData();
+    // 每 15 秒自動刷新
+    setInterval(loadGuardData, 15000);
+</script>
+{% endblock %}
